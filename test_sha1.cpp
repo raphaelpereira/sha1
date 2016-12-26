@@ -98,11 +98,6 @@ void test_other()
  * immitate "sha1sum -b"
  */
 
-void test_file(const string &filename)
-{
-    cout << SHA1::from_file(filename) << " *" << filename << endl;
-}
-
 
 /*
  * main
@@ -110,20 +105,10 @@ void test_file(const string &filename)
 
 int main(int argc, const char *argv[])
 {
-    if (argc > 1)
-    {
-        for (int i = 1; i < argc; i++)
-        {
-            test_file(argv[i]);
-        }
-    }
-    else
-    {
-        test_standard();
-        test_other();
-        cout << endl;
-        cout << endl;
-    }
+    test_standard();
+    test_other();
+    cout << endl;
+    cout << endl;
 
     return 0;
 }

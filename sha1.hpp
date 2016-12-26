@@ -22,23 +22,32 @@
 
 
 #include <cstdint>
-#include <iostream>
-#include <string>
+#include <vector>
 
 
 class SHA1
 {
 public:
     SHA1();
-    void update(const std::string &s);
-    void update(std::istream &is);
-    std::string final();
-    static std::string from_file(const std::string &filename);
+    void update(std::vector<uint8_t> s);
+    std::vector<uint8_t> final();
+    void reset();
 
 private:
     uint32_t digest[5];
-    std::string buffer;
+    std::vector<uint8_t> buffer;
     uint64_t transforms;
+
+    void reset(uint32_t digest[], std::vector<uint8_t> &buffer, uint64_t &transforms);
+    uint32_t rol(const uint32_t value, const std::size_t bits);
+    uint32_t blk(const uint32_t block[], const std::size_t i);
+    void R0(const uint32_t block[], const uint32_t v, uint32_t &w, const uint32_t x, const uint32_t y, uint32_t &z, const std::size_t i);
+    void R1(uint32_t block[], const uint32_t v, uint32_t &w, const uint32_t x, const uint32_t y, uint32_t &z, const std::size_t i);
+    void R2(uint32_t block[], const uint32_t v, uint32_t &w, const uint32_t x, const uint32_t y, uint32_t &z, const std::size_t i);
+    void R3(uint32_t block[], const uint32_t v, uint32_t &w, const uint32_t x, const uint32_t y, uint32_t &z, const std::size_t i);
+    void R4(uint32_t block[], const uint32_t v, uint32_t &w, const uint32_t x, const uint32_t y, uint32_t &z, const std::size_t i);
+    void transform(uint32_t digest[], uint32_t block[], uint64_t &transforms);
+    void buffer_to_block(const std::vector<uint8_t> &buffer, uint32_t block[]);
 };
 
 

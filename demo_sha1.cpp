@@ -18,19 +18,25 @@
 #include "sha1.hpp"
 #include <string>
 #include <iostream>
+#include <vector>
+#include <cstdio>
 using std::string;
 using std::cout;
 using std::endl;
 
 int main(int argc, const char *argv[])
 {
-    const string input = "abc";
+    const std::vector<uint8_t> input = {'a','b','c'};
 
     SHA1 checksum;
     checksum.update(input);
-    const string hash = checksum.final();
+    const std::vector<uint8_t> hash = checksum.final();
 
-    cout << "The SHA-1 of \"" << input << "\" is: " << hash << endl;
+    cout << "The SHA-1 of \"abc\" is: ";
+    for (int i=0; i<hash.size(); i++)
+        std::printf("%02x", hash[i]);
+
+    cout << endl;
 
     return 0;
 }
